@@ -70,36 +70,36 @@ services:
       - redis-slave1
       - redis-slave2
       - redis-slave3
-  redis-sentinel1:
-    container_name: redis-sentinel1
-    build: ./sentinel
-    networks:
-      redis-network:
-        ipv4_address: 172.19.0.9
-    links:
-      - redis-master1
-      - redis-master2
-      - redis-master3
-  redis-sentinel2:
-    container_name: redis-sentinel2
-    build: ./sentinel
-    networks:
-      redis-network:
-        ipv4_address: 172.19.0.10
-    links:
-      - redis-master1
-      - redis-master2
-      - redis-master3
-  redis-sentinel3:
-    container_name: redis-sentinel3
-    build: ./sentinel
-    networks:
-      redis-network:
-        ipv4_address: 172.19.0.11
-    links:
-      - redis-master1
-      - redis-master2
-      - redis-master3
+  # redis-sentinel1:
+  #   container_name: redis-sentinel1
+  #   build: ./sentinel
+  #   networks:
+  #     redis-network:
+  #       ipv4_address: 172.19.0.9
+  #   links:
+  #     - redis-master1
+  #     - redis-master2
+  #     - redis-master3
+  # redis-sentinel2:
+  #   container_name: redis-sentinel2
+  #   build: ./sentinel
+  #   networks:
+  #     redis-network:
+  #       ipv4_address: 172.19.0.10
+  #   links:
+  #     - redis-master1
+  #     - redis-master2
+  #     - redis-master3
+  # redis-sentinel3:
+  #   container_name: redis-sentinel3
+  #   build: ./sentinel
+  #   networks:
+  #     redis-network:
+  #       ipv4_address: 172.19.0.11
+  #   links:
+  #     - redis-master1
+  #     - redis-master2
+  #     - redis-master3
 networks:
   redis-network:
     ipam:
