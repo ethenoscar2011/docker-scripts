@@ -1,0 +1,61 @@
+version: "3.8"
+services:
+  redis-master:
+    image: redis:6.0.4
+    ports:
+      - "6380:6379"
+    networks:
+      redis-sentinel-network:
+        ipv4_address: 172.21.0.2
+  redis-slave1:
+    image: redis:6.0.4
+    command: redis-server --slaveof redis-master 6379
+    links:
+      - "redis-master:redis-master"
+    ports:
+      - "6381:6379"
+    networks:
+      redis-sentinel-network:
+        ipv4_address: 172.21.0.3
+  redis-slave2:
+    image: redis:6.0.4
+    command: redis-server --slaveof redis-master 6379
+    links:
+      - "redis-master:redis-master"
+    ports:
+      - "6382:6379"
+    networks:
+      redis-sentinel-network:
+        ipv4_address: 172.21.0.4
+  redis-sentinel1:
+    build: ./sentinel
+    networks:
+      redis-sentinel-network:
+        ipv4_address: 172.21.0.10
+    links:
+      - redis-master:redis-master
+      - redis-slave1:redis-slave1
+      - redis-slave2:redis-slave2
+  redis-sentinel2:
+    build: ./sentinel
+    networks:
+      redis-sentinel-network:
+        ipv4_address: 172.21.0.11
+    links:
+      - redis-master:redis-master
+      - redis-slave1:redis-slave1
+      - redis-slave2:redis-slave2
+  redis-sentinel3:
+    build: ./sentinel
+    networks:
+      redis-sentinel-network:
+        ipv4_address: 172.21.0.12
+    links:
+      - redis-master:redis-master
+      - redis-slave1:redis-slave1
+      - redis-slave2:redis-slave2
+networks:
+  redis-sentinel-network:
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
